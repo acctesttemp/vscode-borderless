@@ -21,6 +21,7 @@ function activate(context) {
 			// console.log(res)
 			console.log(`Borderless: set visible ${visible}`)
 			//config.update('borderless', visible, true)
+			ps.dispose()
 		}).catch(err => {
 			console.log(err)
 			// vscode.window.showErrorMessage(`Borderless Error: ${err}`)

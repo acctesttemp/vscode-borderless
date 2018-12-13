@@ -106,13 +106,16 @@ public static class CBS {
 									}
 								}
 								UpdateWindow(hWnd);
-								int swpFlags = SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE;
+								// int swpFlags = SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE;
+								// SetWindowPos(hWnd, 0, 0, 0, 0, 0, swpFlags);
+								// if ((windowLong & WS_MAXIMIZE) == WS_MAXIMIZE)
+								// {
+								// 	PostMessage(hWnd, WM_SYSCOMMAND, SC_RESTORE, 0);
+								// 	PostMessage(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+								// }
+								int swpFlags = SWP_FRAMECHANGED | SWP_NOACTIVATE;
 								SetWindowPos(hWnd, 0, 0, 0, 0, 0, swpFlags);
-								if ((windowLong & WS_MAXIMIZE) == WS_MAXIMIZE)
-								{
-									PostMessage(hWnd, WM_SYSCOMMAND, SC_RESTORE, 0);
-									PostMessage(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
-								}
+								PostMessage(hWnd, WM_SYSCOMMAND, SC_RESTORE, 0);
 							}
 						}
 						return true;

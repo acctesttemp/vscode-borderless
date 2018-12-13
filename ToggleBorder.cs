@@ -63,6 +63,17 @@ public static class CBS {
 	private static extern int GetForegroundWindow();
 	[DllImport("user32.dll")]
 	private static extern bool SetForegroundWindow(int hWnd);
+	[DllImport("user32.dll")]
+	private static extern bool GetWindowRect(int hWnd, ref Rect rectangle);
+	
+	[StructLayout(LayoutKind.Sequential)]
+	private struct Rect {
+		public int left;        // x position of upper-left corner
+		public int top;         // y position of upper-left corner
+		public int right;       // x position of lower-right corner
+		public int bottom;      // y position of lower-right corner
+	};
+	
 
 	public static bool ToggleBorder(int pid, byte state, byte borderType) {
 		Process mainproc = Process.GetProcessById(pid);
@@ -113,9 +124,17 @@ public static class CBS {
 								// 	PostMessage(hWnd, WM_SYSCOMMAND, SC_RESTORE, 0);
 								// 	PostMessage(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
 								// }
-								int swpFlags = SWP_FRAMECHANGED | SWP_NOACTIVATE;
-								SetWindowPos(hWnd, 0, 0, 0, 0, 0, swpFlags);
-								PostMessage(hWnd, WM_SYSCOMMAND, SC_RESTORE, 0);
+								
+								Rect rect = new Rect();
+								GetWindowRect(hWnd, ref rect);
+								int width = rect.right - rect.left;
+								int height = rect.bottom - rect.top;
+								// System.IO.File.WriteAllText(@"C:\temp\WindowRect1.txt", rect.left.ToString());
+								// System.IO.File.WriteAllText(@"C:\temp\WindowRect2.txt", rect.top.ToString());
+								// System.IO.File.WriteAllText(@"C:\temp\WindowRect3.txt", width.ToString());
+								// System.IO.File.WriteAllText(@"C:\temp\WindowRect4.txt", height.ToString());
+								int swpFlags = SWP_FRAMECHANGED  | SWP_NOACTIVATE;
+								SetWindowPos(hWnd, 0, rect.left, rect.top, width, height, swpFlags);
 							}
 						}
 						return true;

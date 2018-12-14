@@ -133,7 +133,7 @@ public static class CBS {
 								// System.IO.File.WriteAllText(@"C:\temp\WindowRect2.txt", rect.top.ToString());
 								// System.IO.File.WriteAllText(@"C:\temp\WindowRect3.txt", width.ToString());
 								// System.IO.File.WriteAllText(@"C:\temp\WindowRect4.txt", height.ToString());
-								int swpFlags = SWP_FRAMECHANGED  | SWP_NOACTIVATE;
+								int swpFlags = SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE;
 								SetWindowPos(hWnd, 0, rect.left, rect.top, width, height, swpFlags);
 							}
 						}
